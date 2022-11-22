@@ -56,66 +56,65 @@
 %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>cashList</title>
-</head>
-<body>
-	<div>
-		<!-- 로그인 정보(세션 loginMember 변수) 출력 -->
-	</div>
-	
-	<div>
-		<%=year%>년 <%=month+1%> 월
-	</div>
-	<div>
-		<!-- 달력 -->
-		<table border="1">
-			<tr>
-				<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
-			</tr>
-			<tr>
-				<%
-					for(int i=1; i<=totalTd; i++) {
-				%>
-						<td>
-				<%
-							int date = i-beginBlank;
-							if(date > 0 && date <= lastDate) {
-				%>
-								<%=date%>
-				<%				
+	<head>
+		<meta charset="UTF-8">
+		<title>cashList</title>
+	</head>
+	<body>
+		<div>
+			<!-- 로그인 정보(세션 loginMember 변수) 출력 -->
+		</div>
+		
+		<div>
+			<%=year%>년 <%=month+1%> 월
+		</div>
+		<div>
+			<!-- 달력 -->
+			<table border="1">
+				<tr>
+					<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+				</tr>
+				<tr>
+					<%
+						for(int i=1; i<=totalTd; i++) {
+					%>
+							<td>
+					<%
+								int date = i-beginBlank;
+								if(date > 0 && date <= lastDate) {
+					%>
+									<%=date%>
+					<%				
+								}
+					%>
+							</td>
+					<%
+							
+							if(i%7 == 0 && i != totalTd) {
+					%>
+								</tr><tr> <!-- td7개 만들고 테이블 줄바꿈 -->
+					<%			
 							}
-				%>
-						</td>
-				<%
-						
-						if(i%7 == 0 && i != totalTd) {
-				%>
-							</tr><tr> <!-- td7개 만들고 테이블 줄바꿈 -->
-				<%			
 						}
-					}
-				%>
-			</tr>
-		</table>
-	</div>
-	<div>
-		<%
-			for(HashMap<String, Object> m : list) {
-		%>
-			<div>
-				<%=(Integer)(m.get("cashNo")) %>
-				<%=(String)(m.get("cashDate")) %>
-				<%=(Long)(m.get("cashPrice")) %>
-				<%=(Integer)(m.get("categoryNo")) %>
-				<%=(String)(m.get("categoryKind")) %>
-				<%=(String)(m.get("categoryName")) %>
-			</div>	
-
-		<%
-			}
-		%>	
-	</div>	
-</body>
+					%>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<%
+				for(HashMap<String, Object> m : list) {
+			%>
+	
+					<div><%=(Integer)(m.get("cashNo"))%></div>
+					<div><%=m.get("cashDate")%></div>
+					<div><%=(Integer)(m.get("cashPrice"))%></div>
+					<div><%=(Integer)(m.get("categoryNo"))%></div>
+					<div><%=m.get("categoryKind")%></div>
+					<div><%=m.get("categoryName")%></div>
+					
+			<%
+				}
+			%>	
+		</div>
+	</body>
 </html>
