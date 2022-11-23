@@ -26,7 +26,7 @@
 	if(cashDao.insertCash(cash)) {		
 		String msg = URLEncoder.encode("가계부 작성 성공", "utf-8");
 		String targetUrl = "/cash/cashDateList.jsp";
-		response.sendRedirect(request.getContextPath()+targetUrl + "?msg="+msg+"&year="+year+"&month="+month+"&date="+date);
+		response.sendRedirect(request.getContextPath()+targetUrl + "?msg="+msg+"&year="+year+"&month="+(month)+"&date="+date);
 		return;		
 	}
 %>

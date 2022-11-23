@@ -77,7 +77,7 @@
 <body>
 	<div>
 		<!-- 로그인 정보(세션 loginMember 변수) 출력 -->
-		사용자 : <%=loginMember.getMemberName() %>
+		사용자 : <%=loginMember.getMemberName() %> <a href = "<%=request.getContextPath()%>/cash/updateLoginForm.jsp">[개인정보수정]</a>
 	</div>
 	<br>
 	

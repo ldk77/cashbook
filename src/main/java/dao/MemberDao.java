@@ -1,7 +1,11 @@
 package dao;
-import java.sql.*;
-import util.*;
 import vo.*;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import util.*;
+
+
 public class MemberDao { // 2. Model
 	public Member login(Member paramMember) throws Exception { // 로그인
 		Member resultMember = null; // 반환할 변수초기화
@@ -76,5 +80,52 @@ public class MemberDao { // 2. Model
 			conn.close();
 			return false;
 		}
+	}
+
+	//정보수정	
+	public Boolean udateMember(Member paramMember) throws Exception {
+		
+		// 1. DB 연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();		
+		String sqlInsert = "UPDATE MEMBER SET member_name = ? WHERE member_id= ? AND member_pw=PASSWORD(?)";
+		PreparedStatement stmtInsert = conn.prepareStatement(sqlInsert);
+		stmtInsert.setString(1, (String)paramMember.getMemberName());
+		stmtInsert.setString(2, (String)paramMember.getMemberId());
+		stmtInsert.setString(3, (String)paramMember.getMemberPw());	
+		int row = stmtInsert.executeUpdate();		
+		if(row==1) {		
+			System.out.println("회원수정 성공");
+			stmtInsert.close();
+			conn.close();
+			return true;
+		} else {
+			System.out.println("회원수정 실패");
+			stmtInsert.close();
+			conn.close();
+			return false;
+		}
+	}	
+	
+	//멤버정보 확인
+	public ArrayList<HashMap<String, Object>> selectMemberList(String memberId) throws Exception{
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		//db접속
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "SELECT member_id memberId, member_name memberName FROM member";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			HashMap<String, Object> m = new HashMap<String, Object>();
+			m.put("memberId", rs.getString("memberId"));
+			m.put("memberName", rs.getString("memberName"));
+			list.add(m);
+		}
+		
+		rs.close();
+		stmt.close();
+		conn.close();
+		return list;
 	}
 }

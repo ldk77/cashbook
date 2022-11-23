@@ -9,6 +9,8 @@ import util.DBUtil;
 
 public class CashDao {
 	
+	private String memberId;
+
 	// 일별 가계부 출력
 	public ArrayList<HashMap<String, Object>> selectCashListByDate(String memberId, int year, int month, int date) throws Exception{
 	
@@ -93,7 +95,7 @@ public class CashDao {
 		conn.close();
 		return list;
 	}
-	// 추가 
+	// cash 추가 
 	public Boolean insertCash(Cash cash) throws Exception {
 		// 1. DB 연결
 		DBUtil dbUtil = new DBUtil();
@@ -106,13 +108,69 @@ public class CashDao {
 		stmtInsert.setLong(4,cash.getCashPrice());
 		stmtInsert.setString(5,cash.getCashMemo());		
 		// 4. sql 실행, 결과에 따라 True false 반환
-		int row = stmtInsert.executeUpdate();
+		int row = stmtInsert.executeUpdate();		
 		if(row==1) {
+			System.out.println("cash추가 성공");
+			stmtInsert.close();
+			conn.close();
 			return true;
 		} else {
+			System.out.println("cash추가 실패");
+			stmtInsert.close();
+			conn.close();
 			return false;
-		}		
+		}
+	}	
+	// cash 수정 
+	public Boolean updateCash(Cash updateCash) throws Exception {
+		// 1. DB 연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();		
+		String sqlUpdate = "UPDATE CASH SET category_no = ?, member_id = ?, cash_date = ?, cash_memo =?, cash_price = ? where cash_no = ? ";
+		PreparedStatement stmt = conn.prepareStatement(sqlUpdate);
+		stmt.setInt(1, updateCash.getCategoryNo());
+		stmt.setString(2,updateCash.getMemberId());
+		stmt.setString(3,updateCash.getCashDate());
+		stmt.setString(4,updateCash.getCashMemo());		
+		stmt.setLong(5,updateCash.getCashPrice());
+		stmt.setInt(6, updateCash.getCashNo());
+		// 4. sql 실행, 결과에 따라 True false 반환
+		int row = stmt.executeUpdate();		
+		if(row==1) {
+			System.out.println("cash수정 성공");
+			stmt.close();
+			conn.close();
+			return true;
+		} else {
+			System.out.println("cash수정 실패");
+			stmt.close();
+			conn.close();			
+			return false;
+		}
+	}	
+	
+	//cash 삭제 
+	public Boolean deleteCash(int cashNo) throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();		
+		String sql="DELETE FROM cash WHERE cash_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, cashNo);		
+		int row = stmt.executeUpdate();
+		if(row==1) {
+			System.out.println("cash삭제 성공");
+			stmt.close();
+			conn.close();
+			return true;
+		} else {
+			System.out.println("cash 실패");
+			stmt.close();
+			conn.close();			
+			return false;
+		}
+		
 	}
+
 }
 
 
