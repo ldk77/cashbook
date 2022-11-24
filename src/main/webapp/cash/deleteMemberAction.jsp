@@ -8,8 +8,8 @@
 	//  받아온 값이 null 또는 공백이면 회원가입폼으로 리턴
 	if(request.getParameter("memberId") == null || request.getParameter("memberPw") == null ||
 		request.getParameter("memberId").equals("") || request.getParameter("memberPw").equals("")) {
-		String msg = URLEncoder.encode("회원가입에 필요한 정보를 모두 입력해주세요", "utf-8");		
-		String targetUrl = "/insesrtForm.jsp";
+		String msg = URLEncoder.encode("정보를 모두 입력해주세요", "utf-8");		
+		String targetUrl = "/cash/deleteMemberForm.jsp";
 		response.sendRedirect(request.getContextPath()+targetUrl + "?msg="+msg);
 		return;
 	}	

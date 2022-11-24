@@ -2,7 +2,7 @@
 <%@ page import = "vo.*" %>
 <%
 	// Controller 
-	Member loginMember = (Member)session.getAttribute("login");
+	Member loginMember = (Member)session.getAttribute("loginMember");
 	if(loginMember == null || loginMember.getMemberLevel() < 1){
 		response.sendRedirect(request.getContextPath()+"/loginFrom.jsp");
 		return;

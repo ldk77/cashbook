@@ -14,7 +14,7 @@
 	MemberDao memberDao = new MemberDao();
 	Member resultMember = memberDao.login(paramMember);
 	
-	String redirectUrl = "/member/loginForm.jsp";
+	String redirectUrl = "/loginForm.jsp";
 	
 	if(resultMember != null)
 	{

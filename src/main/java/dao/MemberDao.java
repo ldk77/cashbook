@@ -23,6 +23,7 @@ public class MemberDao { // 2. Model
 			resultMember = new Member(); // 로그인 성공시에 객체 생성
 			resultMember.setMemberId(rs.getString("memberId"));  
 			resultMember.setMemberName(rs.getString("memberName"));
+			resultMember.setMemberLevel(rs.getInt("memberLevel"));
 		}
 		dbUtil.close(rs, stmt, conn);		
 		return resultMember;
