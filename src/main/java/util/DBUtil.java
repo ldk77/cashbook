@@ -9,4 +9,16 @@ public class DBUtil {
 				"jdbc:mariadb://localhost:3306/cashbook","root","java1234");
 		return conn;
 	}
+	
+	public void close(ResultSet rs, PreparedStatement stmt, Connection conn) throws Exception {
+		if(rs != null) {
+			rs.close();
+		}
+		if(stmt != null) {
+			stmt.close();
+		}
+		if(conn !=null) {
+			conn.close();
+		}
+	}
 }

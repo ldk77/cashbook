@@ -19,6 +19,7 @@
 	insertMember.setMemberId(request.getParameter("memberId"));
 	insertMember.setMemberPw(request.getParameter("memberPw"));
 	insertMember.setMemberName(request.getParameter("memberName"));	
+	// Model 호출
 	MemberDao memberDao = new MemberDao();	
 	// 회원 가입 전 ID중복 확인
 	if(memberDao.memberIdCheck(insertMember.getMemberId())) { 

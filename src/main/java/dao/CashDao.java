@@ -50,9 +50,7 @@ public class CashDao {
 		m.put("createdate", rs.getString("createdate"));
 		list.add(m);
 	}
-	rs.close();
-	stmt.close();
-	conn.close();
+	dbUtil.close(rs, stmt, conn);	
 	return list;
 }	
 
@@ -90,9 +88,7 @@ public class CashDao {
 			list.add(m);
 		}
 		
-		rs.close();
-		stmt.close();
-		conn.close();
+		dbUtil.close(rs, stmt, conn);
 		return list;
 	}
 	// cash 추가 
@@ -101,23 +97,21 @@ public class CashDao {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();		
 		String sqlInsert = "INSERT INTO cash (category_no, member_id, cash_date, cash_price, cash_memo, updatedate, createdate) VALUES (?, ?, ?, ?, ?, CURDATE(), CURDATE())";
-		PreparedStatement stmtInsert = conn.prepareStatement(sqlInsert);
-		stmtInsert.setInt(1, cash.getCategoryNo());
-		stmtInsert.setString(2,cash.getMemberId());
-		stmtInsert.setString(3,cash.getCashDate());
-		stmtInsert.setLong(4,cash.getCashPrice());
-		stmtInsert.setString(5,cash.getCashMemo());		
+		PreparedStatement stmt = conn.prepareStatement(sqlInsert);
+		stmt.setInt(1, cash.getCategoryNo());
+		stmt.setString(2,cash.getMemberId());
+		stmt.setString(3,cash.getCashDate());
+		stmt.setLong(4,cash.getCashPrice());
+		stmt.setString(5,cash.getCashMemo());		
 		// 4. sql 실행, 결과에 따라 True false 반환
-		int row = stmtInsert.executeUpdate();		
+		int row = stmt.executeUpdate();		
 		if(row==1) {
 			System.out.println("cash추가 성공");
-			stmtInsert.close();
-			conn.close();
+			dbUtil.close(null, stmt, conn);
 			return true;
 		} else {
 			System.out.println("cash추가 실패");
-			stmtInsert.close();
-			conn.close();
+			dbUtil.close(null, stmt, conn);
 			return false;
 		}
 	}	
@@ -138,34 +132,30 @@ public class CashDao {
 		int row = stmt.executeUpdate();		
 		if(row==1) {
 			System.out.println("cash수정 성공");
-			stmt.close();
-			conn.close();
+			dbUtil.close(null, stmt, conn);
 			return true;
 		} else {
 			System.out.println("cash수정 실패");
-			stmt.close();
-			conn.close();			
+			dbUtil.close(null, stmt, conn);			
 			return false;
 		}
 	}	
 	
 	//cash 삭제 
 	public Boolean deleteCash(int cashNo) throws Exception {
-		DBUtil dbutil = new DBUtil();
-		Connection conn = dbutil.getConnection();		
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();		
 		String sql="DELETE FROM cash WHERE cash_no=?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, cashNo);		
 		int row = stmt.executeUpdate();
 		if(row==1) {
 			System.out.println("cash삭제 성공");
-			stmt.close();
-			conn.close();
+			dbUtil.close(null, stmt, conn);			
 			return true;
 		} else {
 			System.out.println("cash 실패");
-			stmt.close();
-			conn.close();			
+			dbUtil.close(null, stmt, conn);		
 			return false;
 		}
 		

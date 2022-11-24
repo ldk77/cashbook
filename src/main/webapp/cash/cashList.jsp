@@ -77,7 +77,16 @@
 <body>
 	<div>
 		<!-- 로그인 정보(세션 loginMember 변수) 출력 -->
-		사용자 : <%=loginMember.getMemberName() %> <a href = "<%=request.getContextPath()%>/cash/updateLoginForm.jsp">[개인정보수정]</a>
+		사용자 : <%=loginMember.getMemberName() %> 
+		<a href = "<%=request.getContextPath()%>/cash/updateLoginForm.jsp">[개인정보수정]</a>
+		<a href = "<%=request.getContextPath()%>/cash/deleteMemberForm.jsp">[회원탈퇴]</a>
+		<%
+			if(loginMember.getMemberLevel() > 0){
+		%>
+				<a href="<%=request.getContextPath()%>/admin/adminMain.jsp">관리자 페이지</a>			
+		<%		
+			}
+		%>
 	</div>
 	<br>
 	
