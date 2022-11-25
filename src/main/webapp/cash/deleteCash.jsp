@@ -15,7 +15,7 @@
 	// Model 호출
 	CashDao cashdao= new CashDao();
 	if(cashdao.deleteCash(cashNo)){
-		String msg = URLEncoder.encode("가계부 작성 성공", "utf-8");
+		String msg = URLEncoder.encode("삭제 성공", "utf-8");
 		String targetUrl = "/cash/cashDateList.jsp";
 		response.sendRedirect(request.getContextPath()+targetUrl + "?msg="+msg+"&year="+year+"&month="+(month-1)+"&date="+date);
 		return;		

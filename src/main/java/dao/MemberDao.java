@@ -6,7 +6,67 @@ import java.util.HashMap;
 import util.*;
 
 
-public class MemberDao { // 2. Model
+public class MemberDao {
+	//관리자 : 멤버레벨수정
+	public int updateMemberLevel(Member member) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql="UPDATE member SET member_level= ? WHERE member_id= ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, member.getMemberLevel());
+		stmt.setString(2, member.getMemberId());		
+		int row = stmt.executeUpdate();	
+		return row;	
+	}	
+	// 관리자 : 멤버수
+	public int selectMemberCount() throws Exception {
+		int cnt = 0;
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String cntSql = "SELECT COUNT(*) cnt FROM member";
+		PreparedStatement cntStmt = conn.prepareStatement(cntSql);
+		ResultSet cntRs = cntStmt.executeQuery();
+		if(cntRs.next()) { // 전체 행의수
+			cnt = cntRs.getInt("cnt");
+		}		
+		return cnt;
+	}
+	//관리자 멤버 리스트
+	public ArrayList<Member> selectMemberListByPage(int beginRow, int rowPerPage) throws Exception{
+		ArrayList<Member> list = new ArrayList<Member>();
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "SELECT * FROM member ORDER BY createdate DESC LIMIT ?,?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1 , beginRow);
+		stmt.setInt(2 , rowPerPage);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			Member m = new Member();
+			m.setMemberId(rs.getString("member_id"));
+			m.setMemberLevel(rs.getInt("member_level"));
+			m.setMemberName(rs.getString("member_name"));
+			m.setCreatedate(rs.getString("createdate"));
+			m.setMemberNo(rs.getInt("member_no"));
+			m.setUpdatedate(rs.getString("updatedate"));
+			list.add(m);
+		}
+		dbUtil.close(rs, stmt, conn);	
+		return list;
+	}	
+	//관리자 멤버 강퇴
+	public int deleteMemberByAdmin(Member member) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "DELETE FROM MEMBER WHERE member_id=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, member.getMemberId());
+		int row = stmt.executeUpdate();	
+		return row;	
+	}
+	
+	
+	// 2. Model
 	public Member login(Member paramMember) throws Exception { // 로그인
 		Member resultMember = null; // 반환할 변수초기화
 		DBUtil dbUtil = new DBUtil(); 

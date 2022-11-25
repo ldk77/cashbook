@@ -1,12 +1,49 @@
 package dao;
 
+import vo.*;
 import java.sql.*;
 import java.util.ArrayList;
 
 import util.DBUtil;
 import vo.Notice;
-
+	
 public class NoticeDao {
+	
+	//notice 삭제
+	public int deleteNotice(int noticeNo) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql ="DELETE FROM notice WHERE notice_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, noticeNo);
+		int row = stmt.executeUpdate();	
+		return row;				
+	}
+	//notice 수정
+	public int updateNotice(Notice notice) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "UPDATE notice SET notice_memo = ?"
+					+" WHERE notice_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, notice.getNoticeMemo());
+		stmt.setInt(2, notice.getNoticeNo());
+		int row = stmt.executeUpdate();
+		return row;
+	}
+	
+	//notice 작성
+	public int insertNotice(Notice notice) throws Exception{
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "INSERT notice(notice_memo, updatedate, createdate)"
+					+"VALUES(?,now(),now())";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, notice.getNoticeMemo());
+		int row = stmt.executeUpdate();	
+		return row;				
+	}
+	
 	//마지막페이지를 구하려면 전체 row수가 필요 
 	public int selectNoticeCount() throws Exception {
 		int cnt = 0;
