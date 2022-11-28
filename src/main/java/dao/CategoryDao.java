@@ -129,7 +129,7 @@ public class CategoryDao {
 			c.setCategoryKind(rs.getString("categoryKind"));
 			c.setCategoryName(rs.getString("categoryName"));
 			c.setUpdatedate(rs.getString("updatedate"));
-			c.setCreatedate("createdate");
+			c.setCreatedate(rs.getString("createdate"));
 			list.add(c);
 		}
 		
