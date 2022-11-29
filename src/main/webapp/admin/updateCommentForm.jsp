@@ -23,7 +23,6 @@
 </head>
 <body>
 	<h1>답변수정</h1>
-	<h2>기존답변내용</h2>
 	<div>
 		<table border ="1">
 			<tr>
