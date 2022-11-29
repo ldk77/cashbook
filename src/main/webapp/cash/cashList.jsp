@@ -154,5 +154,8 @@
 	<div>
 		<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
 	</div>
+	<div>
+		<jsp:include page="/inc/footer.jsp"></jsp:include>
+	</div>
 </body>
 </html>
