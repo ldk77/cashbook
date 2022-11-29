@@ -10,6 +10,10 @@
 	}
 	
 	int helpNo= Integer.parseInt(request.getParameter("helpNo"));
+	Help help = new Help();
+	help.setHelpNo(helpNo);
+	HelpDao helpDao = new HelpDao();
+	ArrayList<HashMap<String,Object>> list = helpDao.selectHelpOne(helpNo);
 %>
 <!DOCTYPE html>
 <html>
@@ -19,6 +23,22 @@
 </head>
 <body>
 	<h1>답변작성</h1>
+	<div>
+		<table border ="1">
+			<tr>
+				<th>문의내용</th>				
+			</tr>
+			<%
+				for(HashMap m : list){
+			%>
+					<tr>
+						<td><%=m.get("helpMemo")%></td>						
+					</tr>
+			<%		
+				}
+			%>
+		</table>		
+	</div>
 	<form action="<%=request.getContextPath()%>/admin/insertCommentAction.jsp" method="post">
 	<table border="1">
 		<tr>

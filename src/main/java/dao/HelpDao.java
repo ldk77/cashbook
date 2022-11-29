@@ -10,6 +10,25 @@ import util.DBUtil;
 import vo.*;
 
 public class HelpDao {
+	// 답변시 보여줄 문의내용
+	public ArrayList<HashMap<String, Object>> selectHelpOne(int helpNo) throws Exception {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "SELECT help_no helpNo, help_memo helpMemo"
+				+ " FROM help WHERE help_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, helpNo);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			HashMap<String, Object> m = new HashMap<String, Object>();
+			m.put("helpNo", rs.getInt("helpNo"));
+			m.put("helpMemo", rs.getString("helpMemo"));
+			list.add(m);
+		}
+		dbUtil.close(rs, stmt, conn);
+		return list;		
+	}
 	//마지막페이지를 구하려면 전체 row수가 필요 
 	public int selectHelpCount() throws Exception {
 		int cnt = 0;
