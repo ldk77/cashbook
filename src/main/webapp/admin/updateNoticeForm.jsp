@@ -30,5 +30,6 @@
 		</table>
 		<button type = "submit">입력</button>
 	</form>
+	<a href="<%=request.getContextPath()%>/admin/noticeList.jsp">돌아가기</a>
 </body>
 </html>

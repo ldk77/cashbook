@@ -52,8 +52,10 @@
 			<td>
 				<textarea rows="7" cols="100" name="commentMemo"></textarea>
 			</td>
-		</tr>
-		<button type = "submit">수정완료</button>	
+		</tr>			
 	</table>
+	<button type = "submit">수정완료</button>
+	</form>
+	<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp">돌아가기</a>	
 </body>
 </html>

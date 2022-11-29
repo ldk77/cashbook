@@ -30,8 +30,9 @@
 				<textarea rows="7" cols="100" name="helpMemo"></textarea>
 			</td>
 		</tr>
+	</table>	
 		<button type = "submit">수정완료</button>	
 	</form>
-	
+	<a href="<%=request.getContextPath()%>/help/helpList.jsp">돌아가기</a>	
 </body>
 </html>

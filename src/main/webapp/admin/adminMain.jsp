@@ -31,6 +31,6 @@
 	<div>
 		<!-- adminMain contents,, -->
 	</div>
-
+	<a href="<%=request.getContextPath()%>/cash/cashList.jsp">가계부리스트</a>
 </body>
 </html>
