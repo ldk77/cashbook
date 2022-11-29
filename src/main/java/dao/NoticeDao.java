@@ -44,7 +44,7 @@ public class NoticeDao {
 		return row;				
 	}
 	
-	//마지막페이지를 구하려면 전체 row수가 필요 
+	//마지막페이지를 구하려면 전체 row수 필요 
 	public int selectNoticeCount() throws Exception {
 		int cnt = 0;
 		DBUtil dbUtil = new DBUtil();
