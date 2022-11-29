@@ -69,7 +69,8 @@
 								<%=m.get("commentCreatedate")%>	
 						<%									
 							}
-						%>		
+						%>
+					</td>			
 					<td>
 						<%
 							if(m.get("commentMemo") == null){

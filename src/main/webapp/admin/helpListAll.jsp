@@ -55,8 +55,32 @@
 				<td><%=m.get("helpMemo")%></td>
 				<td><%=m.get("memberId") %></td>
 				<td><%=m.get("helpCreatedate") %></td>
-				<td><%=m.get("commentMemo")%></td>
-				<td><%=m.get("commentCreatedate")%></td>
+				<td>
+					<%
+						if(m.get("commentMemo") == null){
+					%>
+							답변대기
+					<%		
+						} else{
+					%>
+							<%=m.get("commentMemo")%>	
+					<%									
+						}
+					%>					
+				</td>
+				<td>
+					<%
+						if(m.get("commentCreatedate") == null){
+					%>
+							답변대기
+					<%		
+						} else{
+					%>
+							<%=m.get("commentCreatedate")%>	
+					<%									
+						}
+					%>
+				</td>		
 				<td>
 					<%
 						if(m.get("commentMemo") == null){
