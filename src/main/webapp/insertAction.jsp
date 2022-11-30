@@ -5,7 +5,7 @@
 <%@ page import = "vo.*" %>
 <%@ page import = "dao.*" %>
 <%
-	
+	request.setCharacterEncoding("UTF-8"); 
 	//  받아온 값이 null 또는 공백이면 회원가입폼으로 리턴
 	if(request.getParameter("memberId") == null || request.getParameter("memberPw") == null || request.getParameter("memberName") == null ||
 		request.getParameter("memberId").equals("") || request.getParameter("memberPw").equals("") || request.getParameter("memberName").equals("")) {

@@ -71,32 +71,47 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+<style>	
+
+.content:after {
+  width: 20%;
+  height: 60%;
+  content: "";
+  background: url("../images/apple.jpg");
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  opacity: 0.1;
+}
+	table{border-collapse: collapse;}
+	td{border: 1px solid gray; padding: 3px; width: 400px; height: 150px;}
+	th:nth-child(1) {color:red;}
+	th:nth-last-child(1) {color:blue;}
+	th{background-color : #dddddd; border: 1px solid gray; font-weight : bold; height: 30px;}
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 <meta charset="UTF-8">
 <title>cashList</title>
 </head>
-<body>
-	<div>
-		<!-- 로그인 정보(세션 loginMember 변수) 출력 -->
-		사용자 : <%=loginMember.getMemberName() %> 
-		<a href = "<%=request.getContextPath()%>/cash/updateLoginForm.jsp">[개인정보수정]</a>
-		<a href = "<%=request.getContextPath()%>/cash/deleteMemberForm.jsp">[회원탈퇴]</a>
-		<%
-			if(loginMember.getMemberLevel() > 0){
-		%>
-				<a href="<%=request.getContextPath()%>/admin/adminMain.jsp">관리자 페이지</a>			
-		<%		
-			}
-		%>
+<body class="content">
+	<jsp:include page="/menuNav.jsp"></jsp:include>	
+	<div style = text-align:center;>
+		<h2><%=year%>년 <%=month+1%> 월</h2>	
 	</div>
-	<br>
-	
 	<div>
-		<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">&#8701;이전달</a>
-		<%=year%>년 <%=month+1%> 월
-		<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
-	</div>
-	<br>
-	
+		<ul class="pagination justify-content-end" style="margin:20px 0">
+			<li class="page-item">	
+				<a class="page-link" href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>"><h4>이전달</h4></a>
+			</li>
+			<li class="page-item">	
+				<a class="page-link" href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>"><h4>다음달</h4></a>
+			</li>
+		</ul>	
+	</div>	
 	<div>
 		<!-- 달력 -->
 		<table border="1">
@@ -150,12 +165,6 @@
 				%>
 			</tr>
 		</table>
-	</div>
-	<div>
-		<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
-	</div>
-	<div>
-		<jsp:include page="/inc/footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

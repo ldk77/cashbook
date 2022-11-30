@@ -22,15 +22,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+table {
+	border: 1px #a39485 solid;
+	font-size: .9em;
+	box-shadow: 0 2px 5px rgba(0,0,0,.25);
+	width: 100%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	overflow: hidden;
+	}
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 <meta charset="UTF-8">
 <title>고객센터</title>
 </head>
 <body>
-	<h1>고객센터</h1>
-	<div>
-		<a href="<%=request.getContextPath()%>/help/insertHelpForm.jsp">문의하기</a>		
+	<div class="text-center">
+		<h1>고객센터</h1>
 	</div>
-	<table border="1">
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
 		<tr>
 			<th>문의내용</th>
 			<th>문의날짜</th>
@@ -103,5 +120,8 @@
 		%>
 	</table>
 	<a href="<%=request.getContextPath()%>/cash/cashList.jsp">이전화면</a>
+	<div class="position-relative">
+		<a class = "position-absolute top-0 end-0" href="<%=request.getContextPath()%>/help/insertHelpForm.jsp">문의하기</a>		
+	</div>
 </body>
 </html>

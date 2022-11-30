@@ -53,8 +53,9 @@ public class HelpDao {
 					+"		, c.comment_memo commentMemo"
 					+"		, c.createdate commentCreatedate"
 					+" FROM help h LEFT JOIN comment c"
-					+" ON h.help_no = c.help_no"
-					+" WHERE h.member_id = ?";
+					+" ON h.help_no = c.help_no "
+					+ "ORDER BY helpCreatedate DESC"										
+					+ "	LIMIT ?,?";
 		
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = null;
