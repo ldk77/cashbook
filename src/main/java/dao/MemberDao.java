@@ -8,39 +8,73 @@ import util.*;
 
 public class MemberDao {
 	//관리자 : 멤버레벨수정
-	public int updateMemberLevel(Member member) throws Exception {
+	public int updateMemberLevel(Member member) {
+		int row = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		conn = dbUtil.getConnection();
 		String sql="UPDATE member SET member_level= ? WHERE member_id= ?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, member.getMemberLevel());
 		stmt.setString(2, member.getMemberId());		
-		int row = stmt.executeUpdate();	
+		row = stmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {					
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		return row;	
 	}	
 	// 관리자 : 멤버수
-	public int selectMemberCount() throws Exception {
+	public int selectMemberCount() {
 		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs =null;
+		try {
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		conn = dbUtil.getConnection();
 		String cntSql = "SELECT COUNT(*) cnt FROM member";
-		PreparedStatement cntStmt = conn.prepareStatement(cntSql);
-		ResultSet cntRs = cntStmt.executeQuery();
-		if(cntRs.next()) { // 전체 행의수
-			cnt = cntRs.getInt("cnt");
-		}		
+		stmt = conn.prepareStatement(cntSql);
+		rs = stmt.executeQuery();
+		if(rs.next()) { // 전체 행의수
+			cnt = rs.getInt("cnt");
+		}
+		} catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {
+					rs.close();
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		return cnt;
 	}
 	//관리자 멤버 리스트
-	public ArrayList<Member> selectMemberListByPage(int beginRow, int rowPerPage) throws Exception{
-		ArrayList<Member> list = new ArrayList<Member>();
+	public ArrayList<Member> selectMemberListByPage(int beginRow, int rowPerPage) {
+		ArrayList<Member> list = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;	
+		try {
+		list = new ArrayList<Member>();
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		conn = dbUtil.getConnection();
 		String sql = "SELECT * FROM member ORDER BY createdate DESC LIMIT ?,?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt = conn.prepareStatement(sql);
 		stmt.setInt(1 , beginRow);
 		stmt.setInt(2 , rowPerPage);
-		ResultSet rs = stmt.executeQuery();
+		rs = stmt.executeQuery();
 		while(rs.next()) {
 			Member m = new Member();
 			m.setMemberId(rs.getString("member_id"));
@@ -51,31 +85,59 @@ public class MemberDao {
 			m.setUpdatedate(rs.getString("updatedate"));
 			list.add(m);
 		}
-		dbUtil.close(rs, stmt, conn);	
+		}catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {
+					rs.close();
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		return list;
 	}	
 	//관리자 멤버 강퇴
-	public int deleteMemberByAdmin(Member member) throws Exception {
+	public int deleteMemberByAdmin(Member member) {
+		int row = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		conn = dbUtil.getConnection();
 		String sql = "DELETE FROM MEMBER WHERE member_id=?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, member.getMemberId());
-		int row = stmt.executeUpdate();	
+		row = stmt.executeUpdate();	
+	} catch(Exception e) {
+		e.printStackTrace();
+		}finally{
+			try {					
+				stmt.close();
+				conn.close();	
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return row;	
 	}
 	
 	
 	// 2. Model
-	public Member login(Member paramMember) throws Exception { // 로그인
+	public Member login(Member paramMember) { // 로그인
 		Member resultMember = null; // 반환할 변수초기화
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;	
+		try {
 		DBUtil dbUtil = new DBUtil(); 
-		Connection conn = dbUtil.getConnection(); // db연결 메서드
+		conn = dbUtil.getConnection(); // db연결 메서드
 		String sql = "SELECT member_id memberId,member_level memberLevel, member_name memberName FROM member WHERE member_id = ? AND member_pw = PASSWORD(?)";
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, paramMember.getMemberId());
 		stmt.setString(2, paramMember.getMemberPw());
-		ResultSet rs = stmt.executeQuery();
+		rs = stmt.executeQuery();
 		if(rs.next()==false) { // 디버깅
 			//System.out.println("로그인 실패");
 		}else {
@@ -85,7 +147,17 @@ public class MemberDao {
 			resultMember.setMemberName(rs.getString("memberName"));
 			resultMember.setMemberLevel(rs.getInt("memberLevel"));
 		}
-		dbUtil.close(rs, stmt, conn);		
+		}catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {
+					rs.close();
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}	
 		return resultMember;
 	}
 	// memberId 중복 확인 메서드	
@@ -159,34 +231,62 @@ public class MemberDao {
 	}	
 	
 	//멤버정보 확인
-	public ArrayList<HashMap<String, Object>> selectMemberList(String memberId) throws Exception{
-		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+	public ArrayList<HashMap<String, Object>> selectMemberList(String memberId) {
+		ArrayList<HashMap<String, Object>> list = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;	
+		try {
+		list = new ArrayList<HashMap<String, Object>>();
 		//db접속
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		conn = dbUtil.getConnection();
 		String sql = "SELECT member_id memberId, member_name memberName FROM member";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		ResultSet rs = stmt.executeQuery();
+		stmt = conn.prepareStatement(sql);
+		rs = stmt.executeQuery();
 		while(rs.next()) {
 			HashMap<String, Object> m = new HashMap<String, Object>();
 			m.put("memberId", rs.getString("memberId"));
 			m.put("memberName", rs.getString("memberName"));
 			list.add(m);
 		}
-		dbUtil.close(rs, stmt, conn);	
+		}catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {
+					rs.close();
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}	
 		return list;
 	}
 	//회원탈퇴 
-	public int deleteMember(Member paramMember) throws Exception{
+	public int deleteMember(Member paramMember) {
+		int row = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
 		//1.DB 연결		
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();		
+		conn = dbUtil.getConnection();		
 		String sql = "DELETE FROM MEMBER WHERE member_id=? AND member_pw = PASSWORD(?)";
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, (String)paramMember.getMemberId());
 		stmt.setString(2, (String)paramMember.getMemberPw());
-		int row = stmt.executeUpdate();	
-		dbUtil.close(null, stmt, conn);
+		row = stmt.executeUpdate();	
+		} catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {					
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		return row;		
 	}
 }

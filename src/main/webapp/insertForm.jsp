@@ -8,7 +8,7 @@
   width: 100%;
   height: 100%;
   content: "";
-  background: url("./images/dg_5.jpg");
+  background: url("./loginboot/images/dg_5.jpg");
   position: absolute;
   top: 0;
   left: 0;
@@ -20,15 +20,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="./loginboot/fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="./loginboot/css/owl.carousel.min.css">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="./loginboot/css/bootstrap.min.css">
     
     <!-- Style -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./loginboot/css/style.css">
 
 <meta charset="UTF-8">
 <title>Insert title here</title>

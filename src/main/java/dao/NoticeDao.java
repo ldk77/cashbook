@@ -3,6 +3,7 @@ package dao;
 import vo.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import util.DBUtil;
 import vo.Notice;
@@ -10,65 +11,127 @@ import vo.Notice;
 public class NoticeDao {
 	
 	//notice 삭제
-	public int deleteNotice(int noticeNo) throws Exception {
+	public int deleteNotice(int noticeNo) {
+		int row = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		conn = dbUtil.getConnection();
 		String sql ="DELETE FROM notice WHERE notice_no=?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, noticeNo);
-		int row = stmt.executeUpdate();	
+		row = stmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {					
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		return row;				
 	}
 	//notice 수정
-	public int updateNotice(Notice notice) throws Exception {
+	public int updateNotice(Notice notice) {
+		int row = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		conn = dbUtil.getConnection();
 		String sql = "UPDATE notice SET notice_memo = ?"
 					+" WHERE notice_no = ?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, notice.getNoticeMemo());
 		stmt.setInt(2, notice.getNoticeNo());
-		int row = stmt.executeUpdate();
+		row = stmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {					
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		return row;
 	}
 	
 	//notice 작성
-	public int insertNotice(Notice notice) throws Exception{
+	public int insertNotice(Notice notice) {
+		int row = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		conn = dbUtil.getConnection();
 		String sql = "INSERT notice(notice_memo, updatedate, createdate)"
 					+"VALUES(?,now(),now())";
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, notice.getNoticeMemo());
-		int row = stmt.executeUpdate();	
-		return row;				
-	}
+		row = stmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {					
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return row;				
+		}
 	
 	//마지막페이지를 구하려면 전체 row수 필요 
 	public int selectNoticeCount() throws Exception {
 		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement cntStmt = null;
+		ResultSet cntRs = null;
+		try {
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		conn = dbUtil.getConnection();
 		String cntSql = "SELECT COUNT(*) cnt FROM notice";
-		PreparedStatement cntStmt = conn.prepareStatement(cntSql);
-		ResultSet cntRs = cntStmt.executeQuery();
+		cntStmt = conn.prepareStatement(cntSql);
+		cntRs = cntStmt.executeQuery();
 		if(cntRs.next()) { // 전체 행의수
 			cnt = cntRs.getInt("cnt");
-		}		
+		}
+		} catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {
+					cntRs.close();
+					cntStmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		return cnt;
 	}
 	// loginForm.jsp 공지목록
-	public ArrayList<Notice> selectNoticeListByPage(int beginRow, int rowPerPage) throws Exception {
-		ArrayList<Notice> list = new ArrayList<Notice>();
+	public ArrayList<Notice> selectNoticeListByPage(int beginRow, int rowPerPage) {
+		ArrayList<Notice> list = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;	
+		try {
+		list = new ArrayList<Notice>();
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+		conn = dbUtil.getConnection();
 		String sql = "SELECT notice_no noticeNo, notice_memo noticeMemo, createdate"
 				+ " FROM notice ORDER BY createdate DESC"
 				+ " LIMIT ?,?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt = conn.prepareStatement(sql);
 		stmt.setInt(1 , beginRow);
 		stmt.setInt(2 , rowPerPage);
-		ResultSet rs = stmt.executeQuery();
+		rs = stmt.executeQuery();
 		while(rs.next()) {
 			Notice n = new Notice();
 			n.setNoticeNo(rs.getInt("noticeNo"));
@@ -76,6 +139,17 @@ public class NoticeDao {
 			n.setCreatedate(rs.getString("createdate"));
 			list.add(n);
 		}
+		}catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {
+					rs.close();
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		return list;
 	}
 }

@@ -15,7 +15,7 @@
 	if(request.getParameter("currentPage") != null){
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
-	int rowPerPage = 5;
+	int rowPerPage = 10;
 	int beginRow = (currentPage-1)*rowPerPage;
 	
 	
@@ -28,13 +28,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="reset.css" />
+<link rel="stylesheet" type="text/css" href="reset.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <style>	
 .content:after {
   width: 100%;
   height: 100%;
   content: "";
-  background: url("./images/dg_5.jpg");
+  background: url("./loginboot/images/dg_5.jpg");
   position: absolute;
   top: 0;
   left: 0;
@@ -48,15 +50,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="./loginboot/fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="./loginboot/css/owl.carousel.min.css">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="./loginboot/css/bootstrap.min.css">
     
     <!-- Style -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./loginboot/css/style.css">
 
     <title>Login #10</title>
 <meta charset="UTF-8">
@@ -73,10 +75,21 @@
    	<br>
    	<br>
    	<br>
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6">          
-			<table class="table">
+   	<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+ 	공지사항 확인하기
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">공지사항</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       			<table class="table">
 				<tr>
 					<th>공지내용</th>
 					<th>공지일</th>
@@ -93,8 +106,10 @@
 				%>
 			</table>
 				<!-- 페이징 -->
-				<br>
-				<div style = "float: right;">
+				<br>					
+      </div>
+      <div class="modal-footer">
+      		<div style = "float: right;">
 					<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=1"><span style="color: #000000">처음</span></a>			
 					<%
 						if(currentPage > 1){
@@ -113,7 +128,16 @@
 					}
 					%>
 							<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=lastPage%>"><span style="color: #000000">마지막</span></a>
-				</div>			
+				</div>	
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>   
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">        
+	
 			
           </div>
           <div class="col-md-6 contents">
@@ -150,5 +174,5 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
-  </body>
+ </body>  
 </html>

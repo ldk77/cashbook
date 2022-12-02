@@ -12,45 +12,58 @@ public class CashDao {
 	private String memberId;
 
 	// 일별 가계부 출력
-	public ArrayList<HashMap<String, Object>> selectCashListByDate(String memberId, int year, int month, int date) throws Exception{
-	
-	ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-	
-	DBUtil dbUtil = new DBUtil();
-	Connection conn = dbUtil.getConnection();
-	String sql = "SELECT "
-			+ "		c.cash_no cashNo"
-			+ "		, c.cash_date cashDate"
-			+ "		, ct.category_kind categoryKind"
-			+ "		, ct.category_name categoryName"
-			+ "		, c.cash_price cashPrice"
-			+ "		, c.cash_memo cashMemo"
-			+ "		, c.updatedate"
-			+ "		, c.createdate"
-			+ "	FROM cash c INNER JOIN category ct"
-			+ "	ON c.category_no = ct.category_no"
-			+ "	WHERE c.member_id = ? AND YEAR(c.cash_date) = ? AND MONTH(c.cash_date) = ?"
-			+ " AND DAY(c.cash_date) = ?"			
-			+ "	ORDER BY c.cash_date ASC, ct.category_kind";
-	PreparedStatement stmt = conn.prepareStatement(sql);
-	stmt.setString(1, memberId);
-	stmt.setInt(2, year);
-	stmt.setInt(3, month);
-	stmt.setInt(4, date);
-	ResultSet rs = stmt.executeQuery();
-	while(rs.next()) {
-		HashMap<String, Object> m = new HashMap<String, Object>();
-		m.put("cashNo", rs.getInt("cashNo"));
-		m.put("cashDate", rs.getString("cashDate"));
-		m.put("categoryKind", rs.getString("categoryKind"));
-		m.put("categoryName", rs.getString("categoryName"));
-		m.put("cashPrice", rs.getLong("cashPrice"));
-		m.put("cashMemo", rs.getString("cashMemo"));
-		m.put("updatedate", rs.getString("updatedate"));
-		m.put("createdate", rs.getString("createdate"));
-		list.add(m);
-	}
-	dbUtil.close(rs, stmt, conn);	
+	public ArrayList<HashMap<String, Object>> selectCashListByDate(String memberId, int year, int month, int date){
+	ArrayList<HashMap<String, Object>> list = null;
+	Connection conn = null;
+	PreparedStatement stmt = null;
+	ResultSet rs = null;
+	try {
+		list = new ArrayList<HashMap<String, Object>>();	
+		DBUtil dbUtil = new DBUtil();	
+		conn = dbUtil.getConnection();
+		String sql = "SELECT "
+				+ "		c.cash_no cashNo"
+				+ "		, c.cash_date cashDate"
+				+ "		, ct.category_kind categoryKind"
+				+ "		, ct.category_name categoryName"
+				+ "		, c.cash_price cashPrice"
+				+ "		, c.cash_memo cashMemo"
+				+ "		, c.updatedate"
+				+ "		, c.createdate"
+				+ "	FROM cash c INNER JOIN category ct"
+				+ "	ON c.category_no = ct.category_no"
+				+ "	WHERE c.member_id = ? AND YEAR(c.cash_date) = ? AND MONTH(c.cash_date) = ?"
+				+ " AND DAY(c.cash_date) = ?"			
+				+ "	ORDER BY c.cash_date ASC, ct.category_kind";
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, memberId);
+		stmt.setInt(2, year);
+		stmt.setInt(3, month);
+		stmt.setInt(4, date);
+		rs = stmt.executeQuery();
+		while(rs.next()) {
+			HashMap<String, Object> m = new HashMap<String, Object>();
+			m.put("cashNo", rs.getInt("cashNo"));
+			m.put("cashDate", rs.getString("cashDate"));
+			m.put("categoryKind", rs.getString("categoryKind"));
+			m.put("categoryName", rs.getString("categoryName"));
+			m.put("cashPrice", rs.getLong("cashPrice"));
+			m.put("cashMemo", rs.getString("cashMemo"));
+			m.put("updatedate", rs.getString("updatedate"));
+			m.put("createdate", rs.getString("createdate"));
+			list.add(m);
+			}
+	} catch(Exception e) {
+		e.printStackTrace();
+		}finally{
+			try {
+				rs.close();
+				stmt.close();
+				conn.close();	
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	return list;
 }	
 
@@ -58,37 +71,52 @@ public class CashDao {
 	
 	// 호출 : cashList.jsp
 	public ArrayList<HashMap<String, Object>> selectCashListByMonth(String memberId, int year, int month) throws Exception {
-		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
-		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
-		String sql = "SELECT"
-				+ "		c.cash_no cashNo"
-				+ "		, c.cash_date cashDate"
-				+ "		, c.cash_price cashPrice"
-				+ "		, c.category_no categoryNo"
-				+ "		, ct.category_kind categoryKind"
-				+ "		, ct.category_name categoryName"
-				+ "	FROM cash c INNER JOIN category ct"
-				+ "	ON c.category_no = ct.category_no"
-				+ "	WHERE c.member_id = ? AND YEAR(c.cash_date) = ? AND MONTH(c.cash_date) = ?"
-				+ "	ORDER BY c.cash_date ASC, ct.category_kind ASC"; 
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, memberId);
-		stmt.setInt(2, year);
-		stmt.setInt(3, month);
-		ResultSet rs = stmt.executeQuery();
-		while(rs.next()) {
-			HashMap<String, Object> m = new HashMap<String, Object>();
-			m.put("cashNo", rs.getInt("cashNo"));
-			m.put("cashDate", rs.getString("cashDate"));
-			m.put("cashPrice", rs.getLong("cashPrice"));
-			m.put("categoryNo", rs.getInt("categoryNo"));
-			m.put("categoryKind", rs.getString("categoryKind"));
-			m.put("categoryName", rs.getString("categoryName"));
-			list.add(m);
-		}
-		
-		dbUtil.close(rs, stmt, conn);
+			ArrayList<HashMap<String, Object>> list = null;
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+			list = new ArrayList<HashMap<String,Object>>();
+			DBUtil dbUtil = new DBUtil();
+			conn = dbUtil.getConnection();
+			String sql = "SELECT"
+					+ "		c.cash_no cashNo"
+					+ "		, c.cash_date cashDate"
+					+ "		, c.cash_price cashPrice"
+					+ "		, c.category_no categoryNo"
+					+ "		, ct.category_kind categoryKind"
+					+ "		, ct.category_name categoryName"
+					+ "	FROM cash c INNER JOIN category ct"
+					+ "	ON c.category_no = ct.category_no"
+					+ "	WHERE c.member_id = ? AND YEAR(c.cash_date) = ? AND MONTH(c.cash_date) = ?"
+					+ "	ORDER BY c.cash_date ASC, ct.category_kind ASC"; 
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberId);
+			stmt.setInt(2, year);
+			stmt.setInt(3, month);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				HashMap<String, Object> m = new HashMap<String, Object>();
+				m.put("cashNo", rs.getInt("cashNo"));
+				m.put("cashDate", rs.getString("cashDate"));
+				m.put("cashPrice", rs.getLong("cashPrice"));
+				m.put("categoryNo", rs.getInt("categoryNo"));
+				m.put("categoryKind", rs.getString("categoryKind"));
+				m.put("categoryName", rs.getString("categoryName"));
+				list.add(m);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				}finally{
+					try {
+					rs.close();
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+		}				
+				
 		return list;
 	}
 	// cash 추가 

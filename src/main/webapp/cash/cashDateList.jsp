@@ -197,7 +197,7 @@
 		<input type="hidden" name="year" value="<%=year%>"> 
 		<input type="hidden" name="month" value="<%=month%>"> 
 		<input type="hidden" name="date" value="<%=date%>"> 	
-		<table>
+		<table class="table">
 			<tr>
 				<td>categoryNo</td>				
 				<td>
