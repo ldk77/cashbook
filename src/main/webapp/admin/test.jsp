@@ -25,9 +25,16 @@
 	ArrayList<HashMap<String,Object>> list = helpDao.selectHelpList(beginRow, rowPerPage);
 %>	
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
+	<style>
+	table{border-collapse: collapse; width: 100%;}
+	td{border: 1px solid gray; padding: 3px; width: 400px; height: 150px; font-size: 15pt;}
+	th:nth-child(1) {color:red;}
+	th:nth-last-child(1) {color:blue;}
+	th{background-color : #dddddd; font-weight: bold ; font-size: 18pt;
+		border: 1px solid gray; font-weight : bold; height: 80px;}
+	</style>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,7 +42,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>CASHLIST</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -45,6 +52,9 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- 부트스트랩 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
@@ -52,82 +62,70 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<%=request.getContextPath()%>/admin/adminMain.jsp">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<%=request.getContextPath()%>/cash/cashList.jsp">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">admin mainpage</div>
+                <div class="sidebar-brand-text mx-3">CashList</div>
             </a>
-			<li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/adminMain.jsp">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Home</span></a>
-            </li>
-      
-				
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="<%=request.getContextPath()%>/cash/cashList.jsp">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>cashList</span></a>
+                    <span>HOME</span></a>
             </li>
-
             <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                admin page
-            </div>     
-           <!-- Nav Item -->
+            <hr class="sidebar-divider">    
+            <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/noticeList.jsp">
+                <a class="nav-link" href="<%=request.getContextPath()%>/help/helpList.jsp">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Notice</span></a>
+                    <span>고객센터</span></a>
             </li>
-                <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/categoryList.jsp">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Category</span></a>
+            <!-- 관리자 Menu -->            
+           <%
+           	if(loginMember.getMemberLevel() > 0){                    		
+           %>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>관리자페이지</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">admin page:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/admin/noticeList.jsp">공지관리</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/admin/categoryList.jsp">카테고리관리</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/admin/memberList.jsp">멤버관리</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/admin/helpListAll.jsp">고객센터관리</a>
+                    </div>
+                </div>
             </li>
-      		<li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/memberList.jsp">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Member</span></a>
-            </li>
-                <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/helpListAll.jsp">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>CustomerService</span></a>  
-      		
-      
+            <%
+           	}
+            %>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
-        </ul>
-        <!-- End of Sidebar -->
-
+        </ul> 
+   
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
-            <div id="content">
-
+           <div id="content">
                 <!-- Topbar -->
-              <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
@@ -179,126 +177,58 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <h2>회원정보수정</h2>
+              	<div>
+		사용자 : <%=loginMember.getMemberName() %>
+	</div>
+	<form action = "<%=request.getContextPath()%>/cash/updateLoginAction.jsp">
+	<table>
+		<tr>
+			<td>ID</td>
+			<td>
+				<input type ="text" name="memberId" value=<%=loginMember.getMemberId() %> readonly="readonly">
+			</td>
+		</tr>
+		<tr>
+			<td>기존이름</td>
+			<td>
+				<input type ="text" name="memberName" value=<%=loginMember.getMemberName() %> readonly="readonly">
+			</td>
+		</tr>
+		<tr>
+			<td>변경할 이름</td>
+			<td>
+				<input type= "text" name="memberNewName">
+			</td>			
+		</tr>
+		<tr>
+			<td>비밀번호확인</td>
+			<td>
+				<input type= "password" name="memberPw">
+			</td>
+		</tr>
+		<tr>		
+			<td>
+		    <button type="submit">수정완료</button>
+			</td>
+		</tr>
+	</table>
+	</form>
+	<a href = "<%=request.getContextPath()%>/cash/cashList.jsp">[이전화면]</a>
+	<%
+		if(request.getParameter("msg")!= null)
+		{
+	%>
+			<div><%=request.getParameter("msg") %></div>
+	<%		
+		}
+	%>
+	
+	
 
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- notice -->
-                        <div class="col-xl-12 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-4">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                               <h2>Member list</h2></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            	<!-- 고객센터 문의 목록 -->	
-												<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
-													<tr>
-														<th>문의내용</th>
-														<th>회원ID</th>
-														<th>문의날짜</th>
-														<th>답변내용</th>
-														<th>답변날짜</th>
-														<th>답변추가/ 수정 / 삭제</th>
-													</tr>
-													<%
-														for(HashMap m : list){
-													%>
-														<tr>
-															<td><%=m.get("helpMemo")%></td>
-															<td><%=m.get("memberId") %></td>
-															<td><%=m.get("helpCreatedate") %></td>
-															<td>
-																<%
-																	if(m.get("commentMemo") == null){
-																%>
-																		답변대기
-																<%		
-																	} else{
-																%>
-																		<%=m.get("commentMemo")%>	
-																<%									
-																	}
-																%>					
-															</td>
-															<td>
-																<%
-																	if(m.get("commentCreatedate") == null){
-																%>
-																		답변대기
-																<%		
-																	} else{
-																%>
-																		<%=m.get("commentCreatedate")%>	
-																<%									
-																	}
-																%>
-															</td>		
-															<td>
-																<%
-																	if(m.get("commentMemo") == null){
-																%>
-																		<a href="<%=request.getContextPath()%>/admin/insertCommentForm.jsp?helpNo=<%=m.get("helpNo")%>">
-																			답변입력
-																		</a>
-																<%	
-																	} else{
-																%>
-																		<a href="<%=request.getContextPath()%>/admin/updateCommentForm.jsp?commentNo=<%=m.get("commentNo")%>">답변수정</a>
-																		<a href="<%=request.getContextPath()%>/admin/deleteComment.jsp?commentNo=<%=m.get("commentNo")%>">답변삭제</a>
-																<%		
-																	}
-																%>
-															</td>
-														</tr>
-														
-													<%	
-														}
-													%>
-												</table>
-												<!-- 페이징 -->
-												<div>
-													<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=1">처음</a>			
-													<%
-														if(currentPage > 1){
-													%>
-															<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=currentPage-1%>">이전</a>
-													<%
-													}
-													%>
-															<a><%=currentPage%></a>			
-													<%
-														if(currentPage < lastPage){
-													%>
-															<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=currentPage+1%>">다음</a>
-													<%
-													}
-													%>
-															<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=lastPage%>">마지막</a>
-												</div>	
-											                                        </div>                                   
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      
-               
-
-                       
-                        </div>
-                    </div>
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-            <!-- End of Main Content -->       
-
-        </div>
         <!-- End of Content Wrapper -->
 
-    </div>
+   
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
