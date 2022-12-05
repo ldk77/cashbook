@@ -17,11 +17,11 @@
 <head>
 	<style>
 	table{border-collapse: collapse; width: 100%;}
-	td{border: 1px solid gray; padding: 3px; width: 400px; height: 150px; font-size: 15pt;}
+	td{border: 1px solid gray; padding: 3px; width: 400px; height: 80px; font-size: 15pt;}
 	th:nth-child(1) {color:red;}
 	th:nth-last-child(1) {color:blue;}
-	th{background-color : #dddddd; font-weight: bold ; font-size: 18pt;
-		border: 1px solid gray; font-weight : bold; height: 80px;}
+	th{background-color : #dddddd; font-weight: bold ; font-size: 15pt;
+		border: 1px solid gray; font-weight : bold; height: 60px;}
 	</style>
 
     <meta charset="utf-8">
