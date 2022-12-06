@@ -181,7 +181,7 @@
 							<td><input type="password" name="memberPw"></td>
 						</tr>					
 					</table>
-					<button type = "submint">회원탈퇴</button>	
+					<button type = "submit" class="btn btn-primary">회원탈퇴</button>	
 				</form>
 					</div>
 				</div>

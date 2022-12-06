@@ -103,7 +103,7 @@
 				</td>
 			</tr>			
 		</table>
-		<button type="submit">입력</button>
+		<button type = "submit" class="btn btn-primary">입력</button>
 	</form>	
 	<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month-1%>&date=<%=date%>&cashNo=<%=cashNo%>">이전화면</a>	
 </div>

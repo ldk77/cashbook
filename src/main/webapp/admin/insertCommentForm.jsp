@@ -168,13 +168,10 @@
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Content Row -->
                     <div class="row">
-
                         <!-- notice -->
                         <div class="col-xl-12 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
@@ -182,8 +179,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-4">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-						                                               <h2>답변 작성</h2></div>					
-								
+						                                               <h2>답변 작성</h2></div>							
 													<div>
 														<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
 															<tr>
@@ -202,12 +198,9 @@
 													</div>
 													<form action="<%=request.getContextPath()%>/admin/insertCommentAction.jsp" method="post">
 													<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
-														<tr>
-															<td>문의번호</td>
-														</tr>
 														<tr>	
 															<td>
-																<input type= "text" name="helpNo" value="<%=helpNo%>" readonly="readonly">
+																<input type= "hidden" name="helpNo" value="<%=helpNo%>" readonly="readonly">
 															</td>
 														</tr>
 														<tr>
@@ -219,18 +212,13 @@
 															</td>
 														</tr>
 													</table>	
-														<button type = "submit">완료</button>	
+														<button type = "submit" class="btn btn-primary">완료</button>	
 													</form>	
 													<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp">돌아가기</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      
-               
-
-                       
+                                    	</div>
+                                	</div>
+                            	</div>
+                        	</div>
                         </div>
                     </div>
                 </div>

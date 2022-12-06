@@ -205,7 +205,7 @@
 						</td>
 					</tr>				
 				</table>
-				<button type="submit">수정완료</button>
+				<button type = "submit" class="btn btn-primary">수정완료</button>
 				</form>
 				<a href = "<%=request.getContextPath()%>/cash/cashList.jsp">[이전화면]</a>
 				<%

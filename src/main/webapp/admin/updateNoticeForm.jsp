@@ -183,12 +183,10 @@
 						                                               <h2>공지 수정</h2></div>
 												<form action="<%=request.getContextPath()%>/admin/updateNoticeAction.jsp">
 												<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
-													<tr>
-														<td>공지번호</td>
-													</tr>
+													
 													<tr>
 														<td>
-															<input type= "text" name="noticeNo" value="<%=noticeNo%>" readonly="readonly">
+															<input type= "hidden" name="noticeNo" value="<%=noticeNo%>" readonly="readonly">
 														</td>
 													</tr>
 													<tr>
@@ -196,11 +194,11 @@
 													</tr>
 													<tr>	
 														<td>
-															<textarea rows="3" cols="50" name="noticeMemo"></textarea>
+															<textarea rows="7" cols="100" name="noticeMemo"></textarea>
 														</td>
 													</tr>			
 												</table>
-												<button type = "submit">입력</button>
+												<button type = "submit" class="btn btn-primary">입력</button>
 											</form>
 											<a href="<%=request.getContextPath()%>/admin/noticeList.jsp">돌아가기</a>
 									                                                                                         

@@ -232,7 +232,7 @@
 				</td>
 			</tr>
 		</table>
-		<button type="submit">입력</button>
+		<button type = "submit" class="btn btn-primary">입력</button>
 	</form>
 	<!-- cash 목록 출력 -->
 	<table class="table">

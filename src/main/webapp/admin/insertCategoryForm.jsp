@@ -196,7 +196,7 @@
 													</td>	
 												</tr>		
 											</table>
-											<button type = "submit">완료</button>
+											<button type = "submit" class="btn btn-primary">완료</button>
 										</form>
 										<a href="<%=request.getContextPath()%>/admin/categoryList.jsp">돌아가기</a>	
                                                                                          

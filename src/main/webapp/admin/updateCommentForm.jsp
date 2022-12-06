@@ -202,12 +202,10 @@
 										</div>
 										<form action="<%=request.getContextPath()%>/admin/updateCommentAction.jsp" method="post">
 										<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
-											<tr>
-												<td>답변번호</td>
-											</tr>
+										
 											<tr>	
 												<td>
-													<input type= "text" name="commentNo" value="<%=commentNo%>" readonly="readonly">
+													<input type= "hidden" name="commentNo" value="<%=commentNo%>" readonly="readonly">
 												</td>
 											</tr>
 											<tr>
@@ -219,7 +217,7 @@
 												</td>
 											</tr>			
 										</table>
-										<button type = "submit">수정완료</button>
+										<button type = "submit" class="btn btn-primary">수정완료</button>
 										</form>
 										<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp">돌아가기</a>	
                                     </div>

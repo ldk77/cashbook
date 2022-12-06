@@ -190,11 +190,11 @@
 															</td>
 														</tr>			
 													</table>
-													<button type = "submit">입력</button>
+													<button type = "submit" class="btn btn-primary">입력</button>
 												</form>
 												<a href="<%=request.getContextPath()%>/admin/noticeList.jsp">돌아가기</a>		
 									                                                                                         
-                                                                
+                                                          
                                     </div>
                                 </div>
                             </div>
