@@ -185,6 +185,7 @@
 				<br>
 				<br>
 				<br>
+				<div class="col-md-10" style="margin: auto;">
 				<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
 					<tr>
 						<th>문의내용</th>
@@ -262,7 +263,7 @@
 					<a class = "position-absolute top-0 end-0" href="<%=request.getContextPath()%>/help/insertHelpForm.jsp">문의하기</a>		
 				</div>
         <!-- End of Content Wrapper -->
-
+	</div>
     </div>
     <!-- End of Page Wrapper -->
 

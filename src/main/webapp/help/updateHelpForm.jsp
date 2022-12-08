@@ -163,7 +163,7 @@
                 <!-- Begin Page Content -->
                 <!-- 내용 -->
                 	             		
-                		
+                	<div class="col-md-6" style="margin: auto;">	
 					<form action="<%=request.getContextPath()%>/help/updateHelpAction.jsp">
 					<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
 					
@@ -184,6 +184,7 @@
 						<button type = "submit" class="btn btn-primary">수정완료</button>	
 					</form>
 					<a href="<%=request.getContextPath()%>/help/helpList.jsp">돌아가기</a>	
+					</div>
 			
         <!-- End of Content Wrapper -->
 

@@ -167,6 +167,7 @@
 					<br>
 					<br>
 					<br>
+					<div class="col-md-6" style="margin: auto;">
                 	<form action="<%=request.getContextPath()%>/help/insertHelpAction.jsp">
 					<table class="table table-bordered">
 						<tr>
@@ -183,7 +184,7 @@
 						</div>
 					</form>
 					<a href="<%=request.getContextPath()%>/help/helpList.jsp"><h5>돌아가기</h5></a>	
-                
+                	</div>
     
         <!-- End of Content Wrapper -->
 

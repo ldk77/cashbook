@@ -167,7 +167,7 @@
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
-
+				<div class="col-md-11" style="margin: auto;">
                 <!-- Begin Page Content -->
                 <h2>회원정보수정</h2>              
 				<form action = "<%=request.getContextPath()%>/cash/updateLoginAction.jsp">
@@ -216,7 +216,7 @@
 				<%		
 					}
 				%>
-				
+				</div>
 	
 
         <!-- End of Content Wrapper -->

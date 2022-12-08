@@ -179,7 +179,7 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="col-md-10" style="margin: auto;">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">
@@ -188,7 +188,7 @@
                     </div>
                     <!-- Content Row -->
 
-	</div>	
+	
 	<div>
 		<!-- 내용 -->
 		<!-- cash 입력 폼 -->
@@ -261,9 +261,9 @@
 				}
 			}		
 		%>
-	</table>	
-	
-	
+			</table>	
+		</div>	
+			
 	</div>
         <!-- End of Content Wrapper -->
 
