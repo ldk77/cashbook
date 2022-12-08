@@ -146,12 +146,10 @@
 	                  <h3>Sign In to <strong>CashList</strong></h3>                 
 	            </div>
 	                <form action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
-	                  <div class="form-group first">
-	                    <label for="username">Username</label>
+	                  <div class="form-group first">	                   
 	                    <input type="text" class="form-control" id="username"  name="memberId">
 	                  </div>
-	                  <div class="form-group last mb-4">
-	                    <label for="password">Password</label>
+	                  <div class="form-group last mb-4">	                   
 	                    <input type="password" class="form-control" id="password" name="memberPw">                    
 	                  </div>                  
 	                  <div class="d-flex mb-5 align-items-center">

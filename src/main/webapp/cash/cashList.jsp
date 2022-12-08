@@ -232,7 +232,7 @@
  
 	<br>
 	<br>
-
+	<div class="col-md-11" style="margin: auto;">
 		<ul class="pagination justify-content-end" style="margin:20px 0">
 			<li class="page-item">	
 				<a class="page-link" href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>"><h4>이전달</h4></a>
@@ -241,9 +241,10 @@
 				<a class="page-link" href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>"><h4>다음달</h4></a>
 			</li>
 		</ul>	
-	</div>	
+		
 	<div>
 		<!-- 달력 -->
+	
 		<table >
 			<tr>
 				<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
@@ -295,6 +296,7 @@
 				%>
 			</tr>
 		</table>
+	</div>
 	</div>
         <!-- End of Content Wrapper -->
 

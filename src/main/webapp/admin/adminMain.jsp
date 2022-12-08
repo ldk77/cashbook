@@ -178,12 +178,10 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+					<div class="col-md-10" style="margin: auto;">
+                    <!-- Content Row -->                  
 
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- notice -->
-                        <div class="col-xl-12 col-md-6 mb-4">
+                        <!-- notice -->                        
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -212,16 +210,16 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- member -->
-                        <div class="col-xl-6 col-md-6 mb-4">
+                        <!-- member -->             
+                        	<br>
+							<br>
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-4">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                New member</div>
+                                                New member
+                                            </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             <table class="table table-bordered text-center">
 												<tr>
@@ -243,14 +241,10 @@
                                         </div>                                     
                                     </div>
                                 </div>
-                            </div>
-                        </div> 
-                                     
-               
-                    <!-- Content Row -->
-                    <div class="row">
-                    
-                         <div class="col-xl-12 col-md-6 mb-4">
+                            </div>          
+                    <!-- help -->           
+							<br>
+							<br>
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -279,22 +273,15 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>              
-               
+                        
+                        </div>          
+					</div>
+				</div>
+			</div>
+		</div>
+            <!-- End of Main Content -->    
 
-                       
-                        </div>
-                    </div>
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-            <!-- End of Main Content -->       
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
+   
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
