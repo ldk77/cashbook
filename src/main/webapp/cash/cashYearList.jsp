@@ -1,23 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import = "java.util.*"%>
+<%@ page import = "dao.*" %>
 <%@ page import = "vo.*" %>
 <%
-	if(session.getAttribute("loginMember") == null){
-		response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
-		return;
+		// 로그인 유효성 검사
+		if(session.getAttribute("loginMember") == null){
+			response.sendRedirect(request.getContextPath()+"loginForm.jsp");
+			return;
 		}
-	Member loginMember = (Member)session.getAttribute("loginMember");
-	int helpNo= Integer.parseInt(request.getParameter("helpNo"));
+		
+		// 로그인정보 
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		String memberId = loginMember.getMemberId();
+	
+	// Model 호출 : 월별 수입,지출 합계 및 평균 리스트
+	CashDao cashDao = new CashDao();	
+	ArrayList<HashMap<String, Object>> list1 = cashDao.selectCashByYear(memberId);
+	// View : 달력출력 + 일별 cash 목록 출력
 %>
 <!DOCTYPE html>
 <html>
 <head>
 	<style>
-	table{border-collapse: collapse; width: 100%;}
-	td{border: 1px solid gray; padding: 3px; width: 200px; height: 80px; font-size: 15pt;}
-	th:nth-child(1) {color:red;}
-	th:nth-last-child(1) {color:blue;}
-	th{background-color : #dddddd; font-weight: bold ; font-size: 15pt;
-		border: 1px solid gray; font-weight : bold; height: 80px;}
+	table {
+	border: 1px #a39485 solid;
+	font-size: .9em;
+	box-shadow: 0 2px 5px rgba(0,0,0,.25);
+	width: 100%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	overflow: hidden;
+	}
 	</style>
 
     <meta charset="utf-8">
@@ -178,32 +191,45 @@
 
                 <!-- Begin Page Content -->
                 <!-- 내용 -->
-                	             		
-                	<div class="col-md-6" style="margin: auto;">	
-					<form action="<%=request.getContextPath()%>/help/updateHelpAction.jsp">
-					<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
-					
-						<tr>	
-							<td>
-							<input type= "hidden" name="helpNo" value="<%=helpNo%>" readonly="readonly">								
-							</td>
-						</tr>
+                
+						<div class="text-center">
+					<h1>년도별 총 수입/지출 리스트</h1>
+				</div>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<div class="col-md-10" style="margin: auto;">
+				<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
+					<tr>
+						<th>년</th>
+						<th>수입 횟수</th>
+						<th>수입 평균</th>
+						<th>수입 합계</th>
+						<th>지출 횟수</th>
+						<th>지출 평균</th>
+						<th>지출 합계</th>
+					</tr>
+					<%
+						for(HashMap<String, Object> m1 : list1){
+					%>
 						<tr>
-							<td>문의내용 수정</td>
+							<td><%=m1.get("year")%>년</td>
+							<td><%=m1.get("importCnt") %> 회</td>
+							<td><%=m1.get("importAvgPrice") %> 원</td>
+							<td><%=m1.get("importSumPrice") %> 원</td>
+							<td><%=m1.get("exportCnt") %> 회</td>
+							<td><%=m1.get("exportAvgPrice") %> 원</td>
+							<td><%=m1.get("exportSumPrice") %> 원</td>				
 						</tr>
-						<tr>	
-							<td>
-								<textarea rows="10" cols="100" name="helpMemo"></textarea>
-							</td>
-						</tr>
-					</table>	
-						<button type = "submit" class="btn btn-primary">수정완료</button>	
-					</form>
-					<a href="<%=request.getContextPath()%>/help/helpList.jsp">돌아가기</a>	
-					</div>
-			
+					<%		
+						}
+					%>
+				</table>			
+				
         <!-- End of Content Wrapper -->
-
+	</div>
     </div>
     <!-- End of Page Wrapper -->
 

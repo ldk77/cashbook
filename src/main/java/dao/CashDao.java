@@ -8,8 +8,230 @@ import util.*;
 import util.DBUtil;
 
 public class CashDao {
+	//해당년도 수입,지출 list
+		public ArrayList<HashMap<String, Object>> selectCashByYear(String memberId){
+			ArrayList<HashMap<String, Object>> list1 = null;
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				list1 = new ArrayList<HashMap<String, Object>>();	
+				DBUtil dbUtil = new DBUtil();	
+				conn = dbUtil.getConnection();
+				String sql = "SELECT "
+						+ "		YEAR(t2.cashDate) 년"
+						+ "		, COUNT(t2.importCash) 수입카운트"
+						+ "		, ifnull(SUM(t2.importCash),0) 수입합계"
+						+ "		, ifnull(ROUND(AVG(t2.importCash)),0) 수입평균"
+						+ "		, COUNT(t2.exportCash) 지출카운트"
+						+ "		, ifnull(SUM(t2.exportCash),0) 지출합계"
+						+ "		, ifnull(ROUND(AVG(t2.exportCash)),0) 지출평균"
+						+ " FROM"
+						+ "	(SELECT "
+						+ "			memberId"
+						+ "			, cashNo"
+						+ "			, cashDate"
+						+ "			, IF(categoryKind = '수입', cashPrice, null) importCash"
+						+ "			, IF(categoryKind = '지출', cashPrice, null) exportCash"
+						+ "	 FROM (SELECT cs.cash_no cashNo"
+						+ "			, cs.cash_date cashDate"
+						+ "			, cs.cash_price cashPrice"
+						+ "			, cg.category_kind categoryKind"
+						+ "			, cs.member_id memberId"
+						+ "	FROM cash cs "
+						+ "	INNER JOIN category cg ON cs.category_no = cg.category_no) t) t2"
+						+ " WHERE t2.memberId = ?"
+						+ " GROUP BY YEAR(t2.cashDate)";
+					
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, memberId);						
+				rs = stmt.executeQuery();
+				while(rs.next()) {
+					HashMap<String, Object> m1 = new HashMap<String, Object>();	
+					m1.put("year", rs.getString("년"));
+					m1.put("importCnt", rs.getString("수입카운트"));
+					m1.put("importSumPrice", rs.getString("수입합계"));
+					m1.put("exportSumPrice", rs.getString("지출합계"));
+					m1.put("importAvgPrice", rs.getString("수입평균"));
+					m1.put("exportCnt", rs.getString("지출카운트"));
+					m1.put("exportAvgPrice", rs.getString("지출평균"));		
+					list1.add(m1);
+					}
+			} catch(Exception e) {
+				e.printStackTrace();
+				}finally{
+					try {
+						rs.close();
+						stmt.close();
+						conn.close();	
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			return list1;
+		}
+		
 	
-	private String memberId;
+	// 데이터가있는 최대년도,최소년도
+	public HashMap<String, Object> selectMinMaxYear() {
+		HashMap<String, Object> year = null;
+		
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT MIN(YEAR(cash_date)) minYear, MAX(YEAR(cash_date)) maxYear FROM cash";
+		
+		try {
+			conn = dbUtil.getConnection();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				year = new HashMap<String, Object>();
+				year.put("minYear", rs.getInt("minYear"));
+				year.put("maxYear", rs.getInt("maxYear"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				dbUtil.close(rs, stmt, conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return year;
+	}	
+
+	
+	//해당년도 월별 수입,지출 list
+	public ArrayList<HashMap<String, Object>> selectCashByMonth(String memberId, int year){
+		ArrayList<HashMap<String, Object>> list1 = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			list1 = new ArrayList<HashMap<String, Object>>();	
+			DBUtil dbUtil = new DBUtil();	
+			conn = dbUtil.getConnection();
+			String sql = "SELECT MONTH(t2.cashDate) 월"
+					+ "		, COUNT(t2.importCash) 수입카운트"
+					+ "		, ifnull(SUM(t2.importCash),0) 수입합계"
+					+ "		, ifnull(ROUND(AVG(t2.importCash)),0) 수입평균"
+					+ "		, COUNT(t2.exportCash) 지출카운트"
+					+ "		, ifnull(SUM(t2.exportCash),0) 지출합계"
+					+ "		, ifnull(ROUND(AVG(t2.exportCash)),0) 지출평균"
+					+ " FROM"
+					+ "	(SELECT "
+					+ "			memberId"
+					+ "			, cashNo"
+					+ "			, cashDate"
+					+ "			, IF(categoryKind = '수입', cashPrice, null) importCash"
+					+ "			, IF(categoryKind = '지출', cashPrice, null) exportCash"
+					+ "	 FROM (SELECT cs.cash_no cashNo"
+					+ "			, cs.cash_date cashDate"
+					+ "			, cs.cash_price cashPrice"
+					+ "			, cg.category_kind categoryKind"
+					+ "			, cs.member_id memberId"
+					+ "	FROM cash cs "
+					+ "	INNER JOIN category cg ON cs.category_no = cg.category_no) t) t2"
+					+ " WHERE t2.memberId = ? AND YEAR(t2.cashDate) = ?"
+					+ " GROUP BY MONTH(t2.cashDate)";
+				
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberId);
+			stmt.setInt(2, year);			
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				HashMap<String, Object> m1 = new HashMap<String, Object>();	
+				m1.put("month", rs.getString("월"));
+				m1.put("importCnt", rs.getString("수입카운트"));
+				m1.put("importSumPrice", rs.getString("수입합계"));
+				m1.put("exportSumPrice", rs.getString("지출합계"));
+				m1.put("importAvgPrice", rs.getString("수입평균"));
+				m1.put("exportCnt", rs.getString("지출카운트"));
+				m1.put("exportAvgPrice", rs.getString("지출평균"));		
+				list1.add(m1);
+				}
+		} catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {
+					rs.close();
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		return list1;
+	}
+	
+	
+	
+	// 월 수입,지출 
+	public ArrayList<HashMap<String, Object>> selectCashPriceByMonth(String memberId, int year, int month){
+		ArrayList<HashMap<String, Object>> list1 = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			list1 = new ArrayList<HashMap<String, Object>>();	
+			DBUtil dbUtil = new DBUtil();	
+			conn = dbUtil.getConnection();
+			String sql = "SELECT MONTH(t2.cashDate) 월"
+					+ "		, COUNT(t2.importCash) 수입카운트"
+					+ "		, ifnull(SUM(t2.importCash),0) 수입합계"
+					+ "		, ifnull(ROUND(AVG(t2.importCash)),0) 수입평균"
+					+ "		, COUNT(t2.exportCash) 지출카운트"
+					+ "		, ifnull(SUM(t2.exportCash),0) 지출합계"
+					+ "		, ifnull(ROUND(AVG(t2.exportCash)),0) 지출평균"
+					+ " FROM"
+					+ "	(SELECT "
+					+ "			memberId"
+					+ "			, cashNo"
+					+ "			, cashDate"
+					+ "			, IF(categoryKind = '수입', cashPrice, null) importCash"
+					+ "			, IF(categoryKind = '지출', cashPrice, null) exportCash"
+					+ "	 FROM (SELECT cs.cash_no cashNo"
+					+ "			, cs.cash_date cashDate"
+					+ "			, cs.cash_price cashPrice"
+					+ "			, cg.category_kind categoryKind"
+					+ "			, cs.member_id memberId"
+					+ "	FROM cash cs "
+					+ "	INNER JOIN category cg ON cs.category_no = cg.category_no) t) t2"
+					+ " WHERE t2.memberId = ? AND YEAR(t2.cashDate) = ? AND MONTH(t2.cashDate) = ?"
+					+ " GROUP BY MONTH(t2.cashDate)";
+				
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberId);
+			stmt.setInt(2, year);
+			stmt.setInt(3, month);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				HashMap<String, Object> m1 = new HashMap<String, Object>();				
+				m1.put("importSumPrice", rs.getString("수입합계"));
+				m1.put("exportSumPrice", rs.getString("지출합계"));
+				m1.put("importAvgPrice", rs.getString("수입평균"));
+				m1.put("exportAvgPrice", rs.getString("지출평균"));		
+				list1.add(m1);
+				}
+		} catch(Exception e) {
+			e.printStackTrace();
+			}finally{
+				try {
+					rs.close();
+					stmt.close();
+					conn.close();	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		return list1;
+	}
+	
+
 
 	// 일별 가계부 출력
 	public ArrayList<HashMap<String, Object>> selectCashListByDate(String memberId, int year, int month, int date){

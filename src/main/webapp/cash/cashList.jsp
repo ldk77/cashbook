@@ -66,6 +66,9 @@
 	CashDao cashDao = new CashDao();
 	ArrayList<HashMap<String, Object>> list = cashDao.selectCashListByMonth(loginMember.getMemberId(), year, month+1);
 	
+	// 월별 수입,지출 합계 및 평균
+	ArrayList<HashMap<String, Object>> list1 = cashDao.selectCashPriceByMonth(loginMember.getMemberId(), year, month+1);
+	
 	// View : 달력출력 + 일별 cash 목록 출력
 %>
 <!DOCTYPE html>
@@ -124,6 +127,22 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>HOME</span></a>
             </li>
+            <!-- Divider -->
+             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                     <i class="fas fa-fw fa-table"></i>
+                    <span>가계부(수입/지출)</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">cash page:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/cash/cashYearList.jsp">연도별 리스트</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/cash/cashMonthList.jsp">월별 리스트</a>                        
+                    </div>
+                </div>
+            </li>            
             <!-- Divider -->
             <hr class="sidebar-divider">    
             <!-- Nav Item - Charts -->
@@ -227,9 +246,118 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800"><%=year%>년 <%=month+1%> 월</h1>                        
                     </div>
-
+					
                     <!-- Content Row -->
- 
+                   <div class="col-md-11" style="margin: auto;">  
+                    <div class="row">
+                    <!-- 월 수입합계 -->
+                         <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Earnings (Monthly)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <%
+                                            	for(HashMap<String, Object> m1 : list1){
+                                            %>
+                                            	<div> <%=m1.get("importSumPrice") %>원</div>
+                                            <%
+                                            	}
+                                            %>
+                                           
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                     <!-- 월 지출합계 -->
+                           <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                               	Spending (Monthly)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <%
+                                            	for(HashMap<String, Object> m1 : list1){
+                                            %>
+                                            	<div> <%=m1.get("exportSumPrice") %>원</div>
+                                            <%
+                                            	}
+                                            %>
+                                           
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    <!-- 월 평균 수입 -->
+                         <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Spending average (Monthly)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <%
+                                            	for(HashMap<String, Object> m1 : list1){
+                                            %>
+                                            	<div> <%=m1.get("importAvgPrice") %>원</div>
+                                            <%
+                                            	}
+                                            %>
+                                           
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                            <!-- 월 평균 지출 -->
+                         <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Earnings average (Monthly)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <%
+                                            	for(HashMap<String, Object> m1 : list1){
+                                            %>
+                                            	<div> <%=m1.get("importAvgPrice") %>원</div>
+                                            <%
+                                            	}
+                                            %>
+                                           
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+                     </div>
+                   </div>   
+                                    
+                     						   
 	<br>
 	<br>
 	<div class="col-md-11" style="margin: auto;">

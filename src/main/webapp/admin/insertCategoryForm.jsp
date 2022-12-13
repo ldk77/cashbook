@@ -55,7 +55,7 @@
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Home</span></a>
             </li>
-      
+      			
 				
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
