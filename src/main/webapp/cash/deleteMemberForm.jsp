@@ -183,22 +183,22 @@
 
                 <!-- Begin Page Content -->
                 <h2>회원탈퇴</h2>
-               <form action="<%=request.getContextPath()%>/cash/deleteMemberAction.jsp">
+               <form id="signinForm" action="<%=request.getContextPath()%>/cash/deleteMemberAction.jsp">
 					<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
 						<tr>
 							<th>회원아이디</th>
 						</tr>
 						<tr>							
-							<td><input type="text" name="memberId"></td>
+							<td><input type="text" name="memberId" id="memberId"></td>
 						</tr>
 						<tr>
 							<th>회원패스워드</th>
 						</tr>
 						<tr>	
-							<td><input type="password" name="memberPw"></td>
+							<td><input type="password" name="memberPw" id="memberPw"></td>
 						</tr>					
 					</table>
-					<button type = "submit" class="btn btn-primary">회원탈퇴</button>	
+					<button type="button" id="signinBtn" class="btn btn-primary">회원탈퇴</button>	
 				</form>
 					</div>
 				</div>
@@ -252,6 +252,33 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+	<script>
+	let signinBtn = document.querySelector('#signinBtn');
+		    
+	signinBtn.addEventListener('click', function(){
+	// 디버깅
+	console.log('siginBtn clik!');        		
+
+	// ID 폼 유효성 검사
+	let memberId = document.querySelector('#memberId');
+	if(memberId.value == '') {
+	alert('id를 입력하세요');
+	memberId.focus(); // 브라우저의 커스를 id태그로 이동
+	return;
+	}
+	// PW 폼 유효성 검사
+	let memberPw = document.querySelector('#memberPw');       
+	if(memberPw.value == '' ) {
+	alert('pw를 확인하세요');
+	memberPw.focus();
+	return;
+	}      
+	
+	let signinForm = document.querySelector('#signinForm');
+	signinForm.submit(); // action="./signinAction.jsp"
+		});
+	</script>	
+
 
 </body>
 

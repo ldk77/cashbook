@@ -208,7 +208,7 @@
 	<div>
 		<!-- 내용 -->
 		<!-- cash 입력 폼 -->
-	<form action="<%=request.getContextPath()%>/cash/insertCashAction.jsp" method="post">
+	<form id="signinForm" action="<%=request.getContextPath()%>/cash/insertCashAction.jsp" method="post">
 		<input type="hidden" name="memberId" value="<%=loginMember.getMemberId()%>">
 		<input type="hidden" name="year" value="<%=year%>"> 
 		<input type="hidden" name="month" value="<%=month%>"> 
@@ -239,16 +239,16 @@
 			</tr>
 			<tr>
 				<td>cashPrice</td>
-				<td><input type="number" name="cashPrice" min="10000" max="100000"></td>
+				<td><input type="number" name="cashPrice" id="cashPrice" min="10000" max="100000"></td>
 			</tr>
 			<tr>
 				<td>cashMemo</td>
 				<td>
-					<textarea rows="3" cols="50" name="cashMemo"></textarea>
+					<textarea rows="3" cols="50" name="cashMemo" id="cashMemo"></textarea>
 				</td>
 			</tr>
 		</table>
-		<button type = "submit" class="btn btn-primary">입력</button>
+		<button type="button" id="signinBtn" class="btn btn-primary">입력</button>
 	</form>
 	<!-- cash 목록 출력 -->
 	<table class="table">
@@ -327,6 +327,35 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+	<script>
+	let signinBtn = document.querySelector('#signinBtn');
+		    
+	signinBtn.addEventListener('click', function(){
+	// 디버깅
+	console.log('siginBtn clik!');   
+	// 가격폼 유효성 검사
+	let cashPrice = document.querySelector('#cashPrice');
+	if(cashPrice.value == '') {
+	alert('가격을 입력하세요');
+	cashPrice.focus(); 
+	return;
+	}
+		       
+	// PW 폼 유효성 검사
+	let cashMemo = document.querySelector('#cashMemo');       
+	if(cashMemo.value == '' ) {
+	alert('내용을 입력하세요');
+	cashMemo.focus();
+	return;
+	}      
+	
+		       
+	let signinForm = document.querySelector('#signinForm');
+	signinForm.submit(); // action="./signinAction.jsp"
+	});
+	</script>	    
+
+
 
 </body>
 

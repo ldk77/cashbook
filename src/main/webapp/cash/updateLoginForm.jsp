@@ -186,7 +186,7 @@
 				<div class="col-md-11" style="margin: auto;">
                 <!-- Begin Page Content -->
                 <h2>회원정보수정</h2>              
-				<form action = "<%=request.getContextPath()%>/cash/updateLoginAction.jsp">
+				<form id="signinForm" action = "<%=request.getContextPath()%>/cash/updateLoginAction.jsp">
 				<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
 					<tr>
 						<th>ID</th>
@@ -209,7 +209,7 @@
 					</tr>
 					<tr>	
 						<td>
-							<input type= "text" name="memberNewName">
+							<input type= "text" name="memberNewName" id="memberNewName" value="">
 						</td>			
 					</tr>
 					<tr>
@@ -217,11 +217,11 @@
 					</tr>
 					<tr>	
 						<td>
-							<input type= "password" name="memberPw">
+							<input type= "password" name="memberPw" id="memberPw" value="">
 						</td>
 					</tr>				
 				</table>
-				<button type = "submit" class="btn btn-primary">수정완료</button>
+				<button type="button" id="signinBtn" class="btn btn-primary">수정완료</button>
 				</form>
 				<a href = "<%=request.getContextPath()%>/cash/cashList.jsp">[이전화면]</a>
 				<%
@@ -281,6 +281,35 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+	<script>
+		   let signinBtn = document.querySelector('#signinBtn');
+		    
+		   signinBtn.addEventListener('click', function(){
+		      // 디버깅
+		      console.log('siginBtn clik!');        		
+		       
+		       
+		      // name 폼 유효성검사
+		      let memberNewName = document.querySelector('#memberNewName');       
+		      if(memberNewName.value == '' ) {
+		        alert('변경할 이름을 입력하세요');
+		        memberNewName.focus();
+		        return;
+		      }      
+		       
+		      // PW 폼 유효성 검사
+		      let memberPw = document.querySelector('#memberPw');       
+		      if(memberPw.value == '' ) {
+		         alert('pw를 확인하세요');
+		         memberPw.focus();
+		         return;
+		      }      
+		   
+		       
+		       let signinForm = document.querySelector('#signinForm');
+		       signinForm.submit(); // action="./signinAction.jsp"
+		    })
+	</script>	        
 
 </body>
 

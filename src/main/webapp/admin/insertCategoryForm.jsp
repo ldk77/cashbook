@@ -179,7 +179,7 @@
                                         <div class="col mr-4">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
 						                                               <h2>Category 추가</h2></div>
-									          <form action="<%=request.getContextPath()%>/admin/insertCategoryAction.jsp" method="post">
+									          <form id="signinForm" action="<%=request.getContextPath()%>/admin/insertCategoryAction.jsp" method="post">
 											<!--  -->
 											<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
 												<tr>
@@ -192,11 +192,11 @@
 												<tr>
 													<td>이름</td>
 													<td>
-														<input type="text" name="categoryName">
+														<input type="text" name="categoryName" id="categoryName">
 													</td>	
 												</tr>		
 											</table>
-											<button type = "submit" class="btn btn-primary">완료</button>
+											<button type="button" id="signinBtn" class="btn btn-primary">완료</button>
 										</form>
 										<a href="<%=request.getContextPath()%>/admin/categoryList.jsp">돌아가기</a>	
                                                                                          
@@ -264,7 +264,29 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
+	<script>
+    let signinBtn = document.querySelector('#signinBtn');
+    
+    signinBtn.addEventListener('click', function(){
+       // 디버깅
+       console.log('siginBtn clik!');        		
+       
+       
+       // 폼 유효성 검사
+       let categoryName = document.querySelector('#categoryName');
+       if(categoryName.value == '') {
+          alert('카테고리 이름을입력하세요');
+          categoryName.focus(); // 브라우저의 커스를 id태그로 이동
+          return;
+       }
+       
+      
+       
+       let signinForm = document.querySelector('#signinForm');
+       signinForm.submit(); //
+    });
+    </script>
+	
 </body>
 
 </html>

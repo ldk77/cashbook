@@ -184,19 +184,19 @@
 					<br>
 					<br>
 					<div class="col-md-6" style="margin: auto;">
-                	<form action="<%=request.getContextPath()%>/help/insertHelpAction.jsp">
+                	<form id="signinForm" action="<%=request.getContextPath()%>/help/insertHelpAction.jsp">
 					<table class="table table-bordered">
 						<tr>
 							<th>문의내용</th>
 						</tr>
 						<tr>			
 							<td>
-								<textarea rows="7" cols="100" name="helpMemo"></textarea>
+								<textarea rows="7" cols="100" name="helpMemo" id="helpMemo"></textarea>
 							</td>
 						</tr>
 					</table>
 						<div class="position-relative" Style="padding: 1em;">
-							<button type = "submit" class="btn btn-primary">등록</button>
+							<button type="button" id="signinBtn" class="btn btn-primary">등록</button>
 						</div>
 					</form>
 					<a href="<%=request.getContextPath()%>/help/helpList.jsp"><h5>돌아가기</h5></a>	
@@ -248,6 +248,27 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+	<script>
+	let signinBtn = document.querySelector('#signinBtn');
+		    
+	signinBtn.addEventListener('click', function(){
+	// 디버깅
+	console.log('siginBtn clik!');        		
+
+	// 내용 폼 유효성 검사
+	let helpMemo = document.querySelector('#helpMemo');
+	if(helpMemo.value == '') {
+	alert('내용을 입력하세요');
+	helpMemo.focus(); // 브라우저의 커스를 id태그로 이동
+	return;
+	}
+
+	
+	let signinForm = document.querySelector('#signinForm');
+	signinForm.submit(); // action="./signinAction.jsp"
+		});
+	</script>	
+
 
 </body>
 

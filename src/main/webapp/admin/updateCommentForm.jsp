@@ -200,7 +200,7 @@
 												%>
 											</table>		
 										</div>
-										<form action="<%=request.getContextPath()%>/admin/updateCommentAction.jsp" method="post">
+										<form id="signinForm" action="<%=request.getContextPath()%>/admin/updateCommentAction.jsp" method="post">
 										<table class = "table table-hover w-100 rounded" style="table-layout: auto; width: 100%; table-layout: fixed;">
 										
 											<tr>	
@@ -213,11 +213,11 @@
 											</tr>
 											<tr>	
 												<td>
-													<textarea rows="7" cols="100" name="commentMemo"></textarea>
+													<textarea rows="7" cols="100" name="commentMemo" id="commentMemo"></textarea>
 												</td>
 											</tr>			
 										</table>
-										<button type = "submit" class="btn btn-primary">수정완료</button>
+										<button type="button" id="signinBtn" class="btn btn-primary">수정완료</button>
 										</form>
 										<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp">돌아가기</a>	
                                     </div>
@@ -283,6 +283,30 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+	<script>
+    let signinBtn = document.querySelector('#signinBtn');
+    
+    signinBtn.addEventListener('click', function(){
+       // 디버깅
+       console.log('siginBtn clik!');        		
+       
+       
+       // 폼 유효성 검사
+       let commentMemo = document.querySelector('#commentMemo');
+       if(commentMemo.value == '') {
+          alert('내용을 입력하세요');
+          commentMemo.focus(); // 브라우저의 커스를 id태그로 이동
+          return;
+       }
+       
+      
+       
+       let signinForm = document.querySelector('#signinForm');
+       signinForm.submit(); //
+    });
+    </script>    
+
+
 
 </body>
 

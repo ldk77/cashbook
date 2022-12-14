@@ -145,12 +145,12 @@
 	            <div class="mb-10">
 	                  <h3>Sign In to <strong>CashList</strong></h3>                 
 	            </div>
-	                <form action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
+	                <form id="signinForm" action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
 	                  <div class="form-group first">	                   
-	                    <input type="text" class="form-control" id="username"  name="memberId">
+	                    <input type="text" class="form-control" id="memberId"  name="memberId" value="">
 	                  </div>
 	                  <div class="form-group last mb-4">	                   
-	                    <input type="password" class="form-control" id="password" name="memberPw">                    
+	                    <input type="password" class="form-control" id="memberPw" name="memberPw" value="">                    
 	                  </div>                  
 	                  <div class="d-flex mb-5 align-items-center">
 	                    <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
@@ -158,7 +158,9 @@
 	                      <div class="control__indicator"></div>
 	                    </label>                    
                   	</div>
-                  		<input type="submit" value="Log In" class="btn btn-pill text-white btn-block btn-primary">    
+                  		<button type="button" id="signinBtn" class="btn btn-pill text-white btn-block btn-primary">
+                  		login
+                  		</button>    
                 	</form>               
                 		<a href="<%=request.getContextPath()%>/insertForm.jsp" metohd="post">
                 		회원가입
@@ -172,5 +174,34 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+    let signinBtn = document.querySelector('#signinBtn');
+    
+    signinBtn.addEventListener('click', function(){
+       // 디버깅
+       console.log('siginBtn clik!');        		
+       
+       
+       // ID 폼 유효성 검사
+       let memberId = document.querySelector('#memberId');
+       if(memberId.value == '') {
+          alert('id를 입력하세요');
+          memberId.focus(); // 브라우저의 커스를 id태그로 이동
+          return;
+       }
+       
+       // PW 폼 유효성 검사
+       let memberPw = document.querySelector('#memberPw');       
+       if(memberPw.value == '' ) {
+          alert('pw를 확인하세요');
+          memberPw.focus();
+          return;
+       }       
+    
+       
+       let signinForm = document.querySelector('#signinForm');
+       signinForm.submit(); // action="./signinAction.jsp"
+    });
+    </script>
  </body>  
 </html>
